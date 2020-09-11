@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'lidlstats.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dd7hbga5vr268t',
+        'USER': 'gtevgidlxcsttb',
+        'PASSWORD': '332f6d65bfa7fd8933e653dd7713af6057744185ae104316b72b645cc223a5c4',
+        'HOST': 'ec2-54-211-169-227.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
