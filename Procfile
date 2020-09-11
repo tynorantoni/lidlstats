@@ -1,1 +1,1 @@
-web: gunicorn lidlstats lidlstats.wsgi
+web: gunicorn --pythonpath lidlstats lidlstats.wsgi
