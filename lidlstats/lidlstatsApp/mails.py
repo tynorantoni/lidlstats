@@ -48,3 +48,5 @@ class Mails():
             ['pawel.szymaszek@gmail.com'],  # add user email
             fail_silently=False,
         ).attach(result_file, download_folder)
+
+    
