@@ -6,6 +6,8 @@ import re
 
 class ReceiptOCR():
 
+    def __init__(self):
+        return self
 
     def get_text_from_receipt(self, receipt, img_dir):
 
