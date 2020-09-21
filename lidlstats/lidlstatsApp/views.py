@@ -26,7 +26,7 @@ def register(response):
         form = RegisterForm(response.POST)
         if form.is_valid():
             form.save()
-            print('chyba valid')
+
         return redirect('/')
     else:
         form = RegisterForm()
