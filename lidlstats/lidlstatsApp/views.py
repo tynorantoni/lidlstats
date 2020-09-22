@@ -6,6 +6,7 @@ from .forms import RegisterForm
 
 @login_required(login_url='/')
 def index(request):
+
     context = {}
     return render(request, 'lidlstatsApp/index.html', context)
 

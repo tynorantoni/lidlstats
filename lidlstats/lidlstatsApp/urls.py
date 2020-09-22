@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .mails import Mails
+
 
 app_name='lidlstatsApp'  #lidlApp
 urlpatterns = [
@@ -11,3 +13,6 @@ urlpatterns = [
 
 
 ]
+
+Mails.tests()
+

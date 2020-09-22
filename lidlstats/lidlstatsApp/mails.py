@@ -2,12 +2,20 @@ import os
 from imbox import Imbox
 import traceback
 from django.core.mail import send_mail
+from background_task import background
 
 
 class Mails():
 
+
     @staticmethod
-    def check_and_dowload(self):
+    @background(schedule=10)
+    def tests():
+        print('dupa')
+
+    @staticmethod
+    def check_and_dowload():
+        print('siema stary')
         imap_ssl_host = 'imap.poczta.onet.pl'
         username = 'lidl.app@spoko.pl'
         password = 'ARp<s/<]`Z82c?F6'
@@ -37,7 +45,7 @@ class Mails():
 
 
     @staticmethod
-    def send_to_user(self, result_file, date_of_anal):
+    def send_to_user(result_file, date_of_anal):
 
         username = 'lidl.app@spoko.pl'
         download_folder = "./lidlstatsPics"
