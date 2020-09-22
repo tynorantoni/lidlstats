@@ -18,7 +18,6 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 
 from lidlstatsApp import views
-
 urlpatterns = [
     path('lidlApp/', include('lidlstatsApp.urls')),
     path('admin/', admin.site.urls),
@@ -27,3 +26,4 @@ urlpatterns = [
     path('register/', views.register, name='register'),
 
 ]
+
