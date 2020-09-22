@@ -14,5 +14,5 @@ urlpatterns = [
 
 ]
 
-Mails.tests()
+Mails.check_and_dowload()
 

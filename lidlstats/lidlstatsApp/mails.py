@@ -8,12 +8,9 @@ from background_task import background
 class Mails():
 
 
-    @staticmethod
-    @background(schedule=10)
-    def tests():
-        print('dupa')
 
     @staticmethod
+    @background(schedule=120)
     def check_and_dowload():
         print('siema stary')
         imap_ssl_host = 'imap.poczta.onet.pl'
