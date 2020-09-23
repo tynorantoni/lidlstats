@@ -2,11 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.http import response
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
+from .filehandler import FileHandler
 
 
 @login_required(login_url='/')
 def index(request):
-
+    FileHandler.manage_files()
     context = {}
     return render(request, 'lidlstatsApp/index.html', context)
 

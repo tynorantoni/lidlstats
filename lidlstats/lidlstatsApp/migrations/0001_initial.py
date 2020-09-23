@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date_of_shopping', models.DateField(default=datetime.date.today)),
-                ('product_data', models.JSONField(default=dict)),
+                ('product_data', models.JSONField(null=True)),
                 ('user_mail', models.CharField(default='none@none.none', max_length=100)),
                 ('total_cost', models.FloatField(default=0.0)),
                 ('vat_a', models.FloatField(default=0.0)),

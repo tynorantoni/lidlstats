@@ -12,4 +12,4 @@ class BasicDataModel(models.Model):
     vat_c = models.FloatField(default=0.00)
 
     def __str__(self):
-        return self
+        return self.product_data
