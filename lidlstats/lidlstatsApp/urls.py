@@ -14,5 +14,5 @@ urlpatterns = [
 ]
 
 FileHandler.manage_files()
-# StatisticDevil.take_out_my_json("hej")
+StatisticDevil.take_out_my_json("hej")
 
