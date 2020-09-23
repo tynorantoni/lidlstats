@@ -3,7 +3,7 @@ import pytesseract
 from PIL import Image
 import json
 import re
-from .models import BasicDataModel
+
 
 
 class ReceiptOCR():
