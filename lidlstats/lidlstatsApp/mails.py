@@ -2,29 +2,28 @@ import os
 from imbox import Imbox
 import traceback
 from django.core.mail import send_mail
-from background_task import background
-
 
 class Mails():
 
 
 
     @staticmethod
-    @background(schedule=120)
-    def check_and_dowload():
+    def check_and_download():
         print('siema stary')
         imap_ssl_host = 'imap.poczta.onet.pl'
         username = 'lidl.app@spoko.pl'
         password = 'ARp<s/<]`Z82c?F6'
         download_folder = "./lidlstatsPics"
-
+        rv = False
         if not os.path.isdir(download_folder):
             os.makedirs(download_folder, exist_ok=True)
 
         mail = Imbox(imap_ssl_host, username=username, password=password, ssl=True, ssl_context=None, starttls=False)
         messages = mail.messages(unread=True)
-
+        if len(messages) != 0:
+            rv = True
         for (uid, message) in messages:
+            print('uid ',uid)
             mail.mark_seen(uid)
 
             for idx, attachment in enumerate(message.attachments):
@@ -34,12 +33,14 @@ class Mails():
                     print(download_path)
                     with open(download_path, "wb") as fp:
                         fp.write(attachment.get('content').read())
+
                 except:
                     pass
                     print(traceback.print_exc())
 
         mail.logout()
-
+        print('rv ', rv)
+        return rv
 
     @staticmethod
     def send_to_user(result_file, date_of_anal):

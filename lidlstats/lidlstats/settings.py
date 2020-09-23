@@ -150,4 +150,4 @@ django_heroku.settings(locals())
 LOGIN_REDIRECT_URL = '/lidlApp'
 LOGOUT_REDIRECT_URL = '/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-BACKGROUND_TASK_RUN_ASYNC= True
+# BACKGROUND_TASK_RUN_ASYNC= True

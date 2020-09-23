@@ -1,7 +1,9 @@
+import os
 import pytesseract
 from PIL import Image
 import json
 import re
+from .models import BasicDataModel
 
 
 class ReceiptOCR():
@@ -9,14 +11,24 @@ class ReceiptOCR():
     def __init__(self):
         return self
 
-    def get_text_from_receipt(self, receipt, img_dir):
+    def get_text_from_receipt(self):
+        download_folder = "./lidlstatsPics"
+        complete_folder = "./lidlstatsPics/complete"
+        if not os.path.isdir(complete_folder):
+            os.makedirs(complete_folder, exist_ok=True)
 
-        pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-        img = Image.open(img_dir + receipt)
-        text = pytesseract.image_to_string(img)
-        data_rows = text.split('\n')
+        for file_name in os.listdir(download_folder):
+            if file_name.endswith(".jpg") or file_name.endswith(".jpeg") or file_name.endswith(".png"):
+                pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+                img = Image.open(download_folder + file_name)
+                text = pytesseract.image_to_string(img)
+                data_rows = text.split('\n')
+                list_of_jsons = list_of_jsons.append(ReceiptOCR.to_json_from_list(data_rows))
+                os.rename(f"{download_folder}/{file_name}", f"{complete_folder}/{file_name}")
+            else:
+                continue
 
-        return data_rows
+        return list_of_jsons
 
     def to_json_from_list(self, list_from_receipt):
 
