@@ -7,14 +7,11 @@ class BasicDataModel(models.Model):
     product_data = models.JSONField(default=dict)
     user_mail = models.CharField(max_length=100, default="none@none.none")
 
-
     def __repr__(self):
         return str(self.product_data)
 
 
 class CalculatedDataModel(models.Model):
-
-
     shopping_id = models.IntegerField(null=False)
     total_cost = models.FloatField(default=0.00)
     vat_a = models.FloatField(default=0.00)

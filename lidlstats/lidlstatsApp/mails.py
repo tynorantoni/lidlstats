@@ -3,12 +3,10 @@ from imbox import Imbox
 import traceback
 from django.core.mail import send_mail
 
-class Mails():
 
+class Mails:
 
-
-    @staticmethod
-    def check_and_download():
+    def check_and_download(self):
         print('siema stary')
         imap_ssl_host = 'imap.poczta.onet.pl'
         username = 'lidl.app@spoko.pl'
@@ -23,7 +21,7 @@ class Mails():
         if len(messages) != 0:
             rv = True
         for (uid, message) in messages:
-            print('uid ',uid)
+            print('uid ', uid)
             mail.mark_seen(uid)
 
             for idx, attachment in enumerate(message.attachments):
@@ -42,8 +40,7 @@ class Mails():
         print('rv ', rv)
         return rv
 
-    @staticmethod
-    def send_to_user(result_file, date_of_anal):
+    def send_to_user(self, result_file, date_of_anal):
 
         username = 'lidl.app@spoko.pl'
         download_folder = "./lidlstatsPics"
@@ -54,5 +51,3 @@ class Mails():
             ['pawel.szymaszek@gmail.com'],  # add user email
             fail_silently=False,
         ).attach(result_file, download_folder)
-
-    

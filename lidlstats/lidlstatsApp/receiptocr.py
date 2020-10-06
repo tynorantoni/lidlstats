@@ -5,23 +5,19 @@ import json
 import re
 
 
-
-class ReceiptOCR():
-
-    def __init__(self):
-        return self
+class ReceiptOCR:
 
     def get_text_from_receipt(self):
         download_folder = "./lidlstatsPics"
         complete_folder = "./lidlstatsPics/complete"
-        list_of_jsons=[]
+        list_of_jsons = []
         if not os.path.isdir(complete_folder):
             os.makedirs(complete_folder, exist_ok=True)
 
         for file_name in os.listdir(download_folder):
             if file_name.endswith(".jpg") or file_name.endswith(".jpeg") or file_name.endswith(".png"):
                 pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-                img = Image.open(download_folder+"/" + file_name)
+                img = Image.open(download_folder + "/" + file_name)
                 text = pytesseract.image_to_string(img)
                 data_rows = text.split('\n')
                 list_of_jsons.append(ReceiptOCR.to_json_from_list(data_rows))
@@ -31,11 +27,11 @@ class ReceiptOCR():
 
         return list_of_jsons
 
-    def to_json_from_list(list_from_receipt):
-        name= ''
-        amount= ''
-        price= ''
-        sale= ''
+    def to_json_from_list(self, list_from_receipt):
+        name = ''
+        amount = ''
+        price = ''
+        sale = ''
         vat = ''
         data_row_dict = {}
         step = 0
@@ -53,12 +49,12 @@ class ReceiptOCR():
                         try:
                             sale = re.search('(......)$', j).group(1)
                             data_row_dict[id_row] = {'name': name,
-                                                           'amount': amount,
-                                                           'price': price,
-                                                           'sale': sale,
-                                                           'VAT': vat
+                                                     'amount': amount,
+                                                     'price': price,
+                                                     'sale': sale,
+                                                     'VAT': vat
                                                      }
-                            sale=''
+                            sale = ''
 
                         except AttributeError:
                             sale = ''

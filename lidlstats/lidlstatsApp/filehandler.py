@@ -4,16 +4,19 @@ from background_task import background
 from .models import BasicDataModel
 
 
-class FileHandler():
+class FileHandler:
+
     # @background(schedule=3600)
     @staticmethod
     def manage_files():
         print('start ')
-        new_mail = Mails.check_and_download()
+        new_mail = Mails()
+        new_mail.check_and_download()
         print('new mail ', new_mail)
         if new_mail == False:
             print('entering json loop ')
-            list_to_save_in_db = ReceiptOCR.get_text_from_receipt('test')
+            list_to_save_in_db = ReceiptOCR()
+            list_to_save_in_db.get_text_from_receipt()
             print("to ma być zapisane w DB ", list_to_save_in_db)
 
             for element in list_to_save_in_db:
