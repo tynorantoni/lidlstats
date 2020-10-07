@@ -20,7 +20,7 @@ class ReceiptOCR:
                 img = Image.open(download_folder + "/" + file_name)
                 text = pytesseract.image_to_string(img)
                 data_rows = text.split('\n')
-                list_of_jsons.append(ReceiptOCR.to_json_from_list(data_rows))
+                list_of_jsons.append(ReceiptOCR.to_json_from_list(data_rows))  #self trouble?, tuple trouble
                 os.rename(f"{download_folder}/{file_name}", f"{complete_folder}/{file_name}")
             else:
                 continue
@@ -28,6 +28,7 @@ class ReceiptOCR:
         return list_of_jsons
 
     def to_json_from_list(self, list_from_receipt):
+        date_of_shopping=''
         name = ''
         amount = ''
         price = ''
@@ -41,6 +42,7 @@ class ReceiptOCR:
         for i in list_from_receipt:
             step += 1
             if re.match('\d+-\d+-\d+', i):
+                date_of_shopping = i
                 for j in list_from_receipt[step:]:
                     if re.match('(PTU)', j):
                         break
@@ -83,4 +85,4 @@ class ReceiptOCR:
 
         receipt_json = json.dumps(data_row_dict)
         print(receipt_json)
-        return receipt_json
+        return (receipt_json, date_of_shopping)
