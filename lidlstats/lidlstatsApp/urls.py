@@ -2,7 +2,6 @@ from background_task import background
 from django.urls import path
 from . import views
 from .filehandler import FileHandler
-from .statisticdevil import StatisticDevil
 
 app_name = 'lidlstatsApp'  # lidlApp
 urlpatterns = [
@@ -13,6 +12,5 @@ urlpatterns = [
 
 ]
 
-FileHandler.manage_files()
-# StatisticDevil.take_out_my_json()
+# FileHandler.manage_files()
 

@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
             name='CalculatedDataModel',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('shopping_id', models.IntegerField()),
+                ('id_from_db', models.IntegerField()),
                 ('total_cost', models.FloatField(default=0.0)),
                 ('vat_a', models.FloatField(default=0.0)),
                 ('vat_b', models.FloatField(default=0.0)),

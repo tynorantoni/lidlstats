@@ -5,8 +5,8 @@ from lidlstatsApp.models import BasicDataModel
 
 class StatisticDevil:
 
-    def take_out_my_json(self, shopping_id):  # niech przyjmuje ID i zwraca jsona
-        jsonSample = BasicDataModel.objects.get(pk=shopping_id)
+    def take_out_my_json(self, id_from_db):
+        jsonSample = BasicDataModel.objects.get(pk=id_from_db)
 
         return jsonSample.product_data
 
@@ -17,7 +17,7 @@ class StatisticDevil:
         return tables_trans
 
     def calculate_max_cost(self, data_table_set):
-        numTabl = pd.to_numeric(self, data_table_set['price'])
+        numTabl = pd.to_numeric(data_table_set['price'])
         return numTabl.max()
 
     def calculate_min_cost(self, data_table_set):
@@ -37,16 +37,19 @@ class StatisticDevil:
         return numTabl.sum()
 
     def calculate_vat_a(self, data_table_set):
-        numTabl = pd.to_numeric(data_table_set['price'])
-        return numTabl.sum()
+        df_count = data_table_set.loc[data_table_set['VAT'] == 'A']
+        df_count['vatA'] = (float(df_count['price']) * 0.23)
+        return df_count.sum()
 
     def calculate_vat_b(self, data_table_set):
-        numTabl = pd.to_numeric(data_table_set['price'])
-        return numTabl.sum()
+        df_count = data_table_set.loc[data_table_set['VAT'] == 'B']
+        df_count['vatB'] = (float(df_count['price']) * 0.08)
+        return df_count.sum()
 
     def calculate_vat_c(self, data_table_set):
-        numTabl = pd.to_numeric(data_table_set['price'])
-        return numTabl.sum()
+        df_count = data_table_set.loc[data_table_set['VAT'] == 'C']
+        df_count['vatC'] = (float(df_count['price']) * 0.05)
+        return df_count.sum()
 
     def chart_histogram(self):
         pass
@@ -56,3 +59,4 @@ class StatisticDevil:
 
     def chart_line(self):
         pass
+
