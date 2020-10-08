@@ -10,11 +10,11 @@ class StatsHandler:
         data_frame = shopping_data_frame.make_yourself_a_table(json)
         CalculatedDataModel.objects.create(shopping_id=id_from_db,
                                            total_cost=shopping_data_frame.calculate_sum(data_frame),
-                                           vat_a=shopping_data_frame.calculate_vat_a(),
-                                           vat_b=shopping_data_frame.calculate_vat_b(),
-                                           vat_c=shopping_data_frame.calculate_vat_c(),
-                                           max_price=shopping_data_frame.calculate_max_cost(),
-                                           min_price=shopping_data_frame.calculate_min_cost(),
-                                           mean_cost=shopping_data_frame.calculate_mean_cost(),
-                                           median_cos=shopping_data_frame.calculate_median_cost()
+                                           vat_a=shopping_data_frame.calculate_vat_a(data_frame),
+                                           vat_b=shopping_data_frame.calculate_vat_b(data_frame),
+                                           vat_c=shopping_data_frame.calculate_vat_c(data_frame),
+                                           max_price=shopping_data_frame.calculate_max_cost(data_frame),
+                                           min_price=shopping_data_frame.calculate_min_cost(data_frame),
+                                           mean_cost=shopping_data_frame.calculate_mean_cost(data_frame),
+                                           median_cost=shopping_data_frame.calculate_median_of_costs(data_frame)
                                            )
