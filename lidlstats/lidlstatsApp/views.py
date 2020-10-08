@@ -3,12 +3,14 @@ from django.http import response
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from .filehandler import FileHandler
+from .models import CalculatedDataModel
 
 
 @login_required(login_url='/')
 def index(request):
     FileHandler.manage_files()
-    context = {}
+    data_to_show = CalculatedDataModel.objects.get(id=26)
+    context = {'data_to_show':data_to_show}
     return render(request, 'lidlstatsApp/index.html', context)
 
 

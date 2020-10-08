@@ -1,7 +1,6 @@
 from background_task import background
 from django.urls import path
 from . import views
-from .filehandler import FileHandler
 
 app_name = 'lidlstatsApp'  # lidlApp
 urlpatterns = [
