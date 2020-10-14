@@ -25,10 +25,10 @@ def index(request):
 
     context = {'data_to_show': data_to_show,
                'no_of_shop': no_of_shop,
-               'total_shopping_cost': total_shopping_cost,
-               'min_cost': min_cost[0],
+               'total_shopping_cost': round(total_shopping_cost,2),
+               'min_cost': round(min_cost[0],2),
                'min_cost_date':min_cost[1],
-               'max_cost': max_cost[0],
+               'max_cost': round(max_cost[0],2),
                'max_cost_date':max_cost[1]
                }
     return render(request, 'lidlstatsApp/index.html', context)

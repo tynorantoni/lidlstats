@@ -12,50 +12,84 @@ class StatisticDevil:
         return jsonSample.product_data, jsonSample.date_of_shopping
 
     def make_yourself_a_table(self, json_from_db):
-        tables = pd.read_json(json_from_db)
-        tables = tables.astype(str)
-        tables = tables.apply(lambda x: x.str.replace(',', '.'))
-        tables_trans = tables.transpose()
+        if json_from_db:
+            tables = pd.read_json(json_from_db)
+            tables = tables.astype(str)
+            tables = tables.apply(lambda x: x.str.replace(',', '.'))
+            tables_trans = tables.transpose()
 
-        return tables_trans
+            return tables_trans
+        else:
+            tables = pd.DataFrame()
+            return tables
 
     def calculate_max_cost(self, data_table_set):
-        numTabl = pd.to_numeric(data_table_set['price'])
-        return numTabl.max()
+        if data_table_set.empty:
+            return 0
+        else:
+            numTabl = pd.to_numeric(data_table_set['price'])
+            return numTabl.max()
 
     def calculate_min_cost(self, data_table_set):
-        numTabl = pd.to_numeric(data_table_set['price'])
-        return numTabl.min()
+        if data_table_set.empty:
+            return 0
+        else:
+            numTabl = pd.to_numeric(data_table_set['price'])
+            return numTabl.min()
 
     def calculate_mean_cost(self, data_table_set):
-        numTabl = pd.to_numeric(data_table_set['price'])
-        return numTabl.mean()
+        if data_table_set.empty:
+            return 0
+        else:
+            numTabl = pd.to_numeric(data_table_set['price'])
+            return numTabl.mean()
 
     def calculate_median_of_costs(self, data_table_set):
-        numTabl = pd.to_numeric(data_table_set['price'])
-        return numTabl.median()
+        if data_table_set.empty:
+            return 0
+        else:
+            numTabl = pd.to_numeric(data_table_set['price'])
+            return numTabl.median()
 
     def calculate_sum(self, data_table_set):
-        numTabl = pd.to_numeric(data_table_set['price'])
-        return numTabl.sum()
+        if data_table_set.empty:
+            return 0
+        else:
+            numTabl = pd.to_numeric(data_table_set['price'])
+            return numTabl.sum()
 
     def calculate_vat_a(self, data_table_set):
-        df_count = data_table_set.loc[data_table_set['VAT'] == 'A']
-        df_count['vatA'] = (float(df_count['price']) * 0.23)
-        return round(df_count['vatA'].sum(),2)
+        if data_table_set.empty:
+            return 0
+        else:
+            try:
+                df_count = data_table_set.loc[data_table_set['VAT'] == 'A']
+                df_count['vatA'] = (float(df_count['price']) * 0.23)
+                return round(df_count['vatA'].sum(),2)
+            except TypeError:
+                return 0
 
     def calculate_vat_b(self, data_table_set):
-        df_count = data_table_set.loc[data_table_set['VAT'] == 'B']
-        df_count['vatB'] = (float(df_count['price']) * 0.08)
-        return round(df_count['vatB'].sum(),2)
+        if data_table_set.empty:
+            return 0
+        else:
+            try:
+                df_count = data_table_set.loc[data_table_set['VAT'] == 'B']
+                df_count['vatB'] = (float(df_count['price']) * 0.08)
+                return round(df_count['vatB'].sum(),2)
+            except TypeError:
+                return 0
 
     def calculate_vat_c(self, data_table_set):
-        try:
-            df_count = data_table_set.loc[data_table_set['VAT'] == 'C']
-            df_count['vatC'] = (float(df_count['price']) * 0.05)
-            return round(df_count['vatC'].sum(),2)
-        except TypeError:
+        if data_table_set.empty:
             return 0
+        else:
+            try:
+                df_count = data_table_set.loc[data_table_set['VAT'] == 'C']
+                df_count['vatC'] = (float(df_count['price']) * 0.05)
+                return round(df_count['vatC'].sum(),2)
+            except TypeError:
+                return 0
 
     def chart_bar(self):
         chart_folder="lidlstatsApp/static/lidlstatsPics/charts/"
@@ -73,7 +107,7 @@ class StatisticDevil:
 
         y_pos = np.arange(len(amount_of_cash))
 
-        plt.figure(figsize=(14, 5))
+        plt.figure(figsize=(13, 5))
 
         # Create bars
         plt.bar(y_pos, amount_of_cash, color='#36b9cc')

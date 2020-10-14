@@ -20,8 +20,11 @@ class ReceiptOCR:
                 img = Image.open(download_folder + "/" + file_name)
                 text = pytesseract.image_to_string(img)
                 data_rows = text.split('\n')
-                list_of_jsons.append(ReceiptOCR.to_json_from_list(data_rows))  #self trouble?, tuple trouble
+                list_of_jsons.append(ReceiptOCR().to_json_from_list(data_rows))  #self trouble?, tuple trouble
+                if os.path.exists(f"{complete_folder}/{file_name}"):
+                    os.remove(f"{complete_folder}/{file_name}")
                 os.rename(f"{download_folder}/{file_name}", f"{complete_folder}/{file_name}")
+
             else:
                 continue
 
@@ -66,14 +69,14 @@ class ReceiptOCR:
                         temporary_data_row = j.split(' ')
                         name = temporary_data_row[:-5]
                         try:
-                            if re.match('\d+', temporary_data_row[-4]):
-                                amount = temporary_data_row[-4]
+                            if re.match('\d+,\d+|\d+', temporary_data_row[-4]):
+                                amount = re.search('\d+,\d+|\d+',temporary_data_row[-4]).group(0)
                             else:
-                                amount = temporary_data_row[-5]
+                                amount = re.search('\d+,\d+|\d+',temporary_data_row[-5]).group(0)
                         except:
                             print('shit happened', id_row, temporary_data_row)
-                        price = temporary_data_row[-3]
-                        vat = temporary_data_row[-1]
+                        price = re.search('\d+,\d+',temporary_data_row[-3]).group(0)
+                        vat = re.search('[ABC]', temporary_data_row[-1]).group(0)
 
                         data_row_dict.update({id_row: {'name': name,
                                                        'amount': amount,
