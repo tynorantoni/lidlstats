@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from .filehandler import FileHandler
 from .models import CalculatedDataModel
-from .statisticdevil import StatisticDevil
+
 
 
 @login_required(login_url='/')
@@ -12,7 +12,6 @@ def index(request):
     FileHandler.manage_files()
     shopping_data = CalculatedDataModel.objects.all()
     data_to_show = CalculatedDataModel.objects.get(id=1)
-    charts = StatisticDevil()
     no_of_shop = shopping_data.count()
     total_shopping_cost = 0
     # max_cost=shopping_data.aggregate(Max('total_cost'))   stay in touch
@@ -23,7 +22,6 @@ def index(request):
     for cost in shopping_data:
         total_shopping_cost += cost.total_cost
 
-    charts.chart_bar()
 
     context = {'data_to_show': data_to_show,
                'no_of_shop': no_of_shop,

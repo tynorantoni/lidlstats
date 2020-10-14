@@ -13,10 +13,17 @@ class Mails:
         password = 'ARp<s/<]`Z82c?F6'
         download_folder = "./lidlstatsPics"
         rv = False
+
         if not os.path.isdir(download_folder):
             os.makedirs(download_folder, exist_ok=True)
 
-        mail = Imbox(imap_ssl_host, username=username, password=password, ssl=True, ssl_context=None, starttls=False)
+        mail = Imbox(imap_ssl_host,
+                     username=username,
+                     password=password,
+                     ssl=True,
+                     ssl_context=None,
+                     starttls=False)
+
         messages = mail.messages(unread=True)
         if len(messages) != 0:
             rv = True
