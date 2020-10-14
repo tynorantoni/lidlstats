@@ -12,7 +12,8 @@ class BasicDataModel(models.Model):
 
 
 class CalculatedDataModel(models.Model):
-    shopping_id = models.IntegerField(null=False)
+    shoppig_id = models.IntegerField(null=False)
+    date_of_shoppings = models.DateField(default=datetime.date.today)
     total_cost = models.FloatField(default=0.00)
     vat_a = models.FloatField(default=0.00)
     vat_b = models.FloatField(default=0.00)

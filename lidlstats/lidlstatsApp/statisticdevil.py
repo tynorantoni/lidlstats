@@ -1,13 +1,15 @@
+import os
 import pandas as pd
-
-from lidlstatsApp.models import BasicDataModel
+import numpy as np
+import matplotlib.pyplot as plt
+from lidlstatsApp.models import BasicDataModel, CalculatedDataModel
 
 
 class StatisticDevil:
 
     def take_out_my_json(self, id_from_db):
         jsonSample = BasicDataModel.objects.get(pk=id_from_db)
-        return jsonSample.product_data
+        return jsonSample.product_data, jsonSample.date_of_shopping
 
     def make_yourself_a_table(self, json_from_db):
         tables = pd.read_json(json_from_db)
@@ -55,8 +57,38 @@ class StatisticDevil:
         except TypeError:
             return 0
 
-    def chart_histogram(self):
-        pass
+    def chart_bar(self):
+        chart_folder="lidlstatsApp/static/lidlstatsPics/charts/"
+        amount_of_cash = []
+        date_of_shopping = []
+        shopping_data = CalculatedDataModel.objects.all()
+
+        if not os.path.isdir(chart_folder):
+            os.makedirs(chart_folder, exist_ok=True)
+
+        for cost in shopping_data:
+            amount_of_cash.append(cost.total_cost)
+            date_of_shopping.append(cost.date_of_shoppings)
+
+
+        y_pos = np.arange(len(amount_of_cash))
+
+        plt.figure(figsize=(14, 5))
+
+        # Create bars
+        plt.bar(y_pos, amount_of_cash, color='#36b9cc')
+        for index, value in enumerate(amount_of_cash):
+            plt.text(index, value + 0.1, str(value))
+        plt.xticks(y_pos, date_of_shopping)
+        plt.xlabel('Data zakupów', fontsize=12, color='#030303')
+        plt.ylabel('Koszt zakupów [PLN]', fontsize=12, color='#030303')
+        plt.title('Twoje ostatnie zakupy w Lidlu', fontsize=16, color='#030303')
+        file_name = "totalbar"
+
+        if os.path.exists(f"{chart_folder}/{file_name}"):
+            os.remove(f"{chart_folder}/{file_name}")
+
+        plt.savefig(f"{chart_folder}/{file_name}")
 
     def chart_pie(self):
         pass

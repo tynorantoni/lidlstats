@@ -7,8 +7,10 @@ class StatsHandler:
     def lets_make_a_data(self, id_from_db):
         shopping_data_frame = StatisticDevil()
         json = shopping_data_frame.take_out_my_json(id_from_db)
-        data_frame = shopping_data_frame.make_yourself_a_table(json)
-        CalculatedDataModel.objects.create(shopping_id=id_from_db,
+        print('json[0] ',json[0],' json[1] ',json[1])
+        data_frame = shopping_data_frame.make_yourself_a_table(json[0])
+        CalculatedDataModel.objects.create(shoppig_id=id_from_db,
+                                           date_of_shoppings=json[1],
                                            total_cost=shopping_data_frame.calculate_sum(data_frame),
                                            vat_a=shopping_data_frame.calculate_vat_a(data_frame),
                                            vat_b=shopping_data_frame.calculate_vat_b(data_frame),
