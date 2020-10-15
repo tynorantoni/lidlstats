@@ -9,28 +9,29 @@ from .uploadhandler import UploadHandler
 
 @login_required(login_url='/')
 def index(request):
-    FileHandler.manage_files()
-    shopping_data = CalculatedDataModel.objects.all()
-    data_to_show = CalculatedDataModel.objects.get(id=1)
-    no_of_shop = shopping_data.count()
-    total_shopping_cost = 0
-    # max_cost=shopping_data.aggregate(Max('total_cost'))   stay in touch
-    min_max_values = shopping_data.order_by('total_cost')
-    max_cost = min_max_values.last().total_cost, min_max_values.last().date_of_shoppings
-    min_cost = min_max_values[0].total_cost, min_max_values[0].date_of_shoppings
-
-    for cost in shopping_data:
-        total_shopping_cost += cost.total_cost
-
-
-    context = {'data_to_show': data_to_show,
-               'no_of_shop': no_of_shop,
-               'total_shopping_cost': round(total_shopping_cost,2),
-               'min_cost': round(min_cost[0],2),
-               'min_cost_date':min_cost[1],
-               'max_cost': round(max_cost[0],2),
-               'max_cost_date':max_cost[1]
-               }
+    # FileHandler.manage_files()
+    # shopping_data = CalculatedDataModel.objects.all()
+    # data_to_show = CalculatedDataModel.objects.get(id=1)
+    # no_of_shop = shopping_data.count()
+    # total_shopping_cost = 0
+    # # max_cost=shopping_data.aggregate(Max('total_cost'))   stay in touch
+    # min_max_values = shopping_data.order_by('total_cost')
+    # max_cost = min_max_values.last().total_cost, min_max_values.last().date_of_shoppings
+    # min_cost = min_max_values[0].total_cost, min_max_values[0].date_of_shoppings
+    #
+    # for cost in shopping_data:
+    #     total_shopping_cost += cost.total_cost
+    #
+    #
+    # context = {'data_to_show': data_to_show,
+    #            'no_of_shop': no_of_shop,
+    #            'total_shopping_cost': round(total_shopping_cost,2),
+    #            'min_cost': round(min_cost[0],2),
+    #            'min_cost_date':min_cost[1],
+    #            'max_cost': round(max_cost[0],2),
+    #            'max_cost_date':max_cost[1]
+    #            }
+    context={}
     return render(request, 'lidlstatsApp/index.html', context)
 
 
@@ -44,10 +45,10 @@ def upload_file(request):
             print('form jest validą')
             new_img.upload_img(request.FILES['file'])
             FileHandler.manage_files()
-            return render(request, 'upload.html', {'form': form}) # HttpResponseRedirect('/success/url/')
+            return render(request, 'lidlstatsApp/upload.html', {'form': form}) # HttpResponseRedirect('/success/url/')
     else:
         form = ImageUpload()
-    return render(request, 'upload.html', {'form': form})
+    return render(request, 'lidlstatsApp/upload.html', {'form': form})
 
 def data(request):
     context = {}
