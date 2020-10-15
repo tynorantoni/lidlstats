@@ -9,7 +9,7 @@ from .uploadhandler import UploadHandler
 
 @login_required(login_url='/')
 def index(request):
-    FileHandler.manage_files()
+    # FileHandler.manage_files()
     shopping_data = CalculatedDataModel.objects.all()
     data_to_show = CalculatedDataModel.objects.get(id=1)
     no_of_shop = shopping_data.count()
@@ -31,6 +31,7 @@ def index(request):
                'max_cost': round(max_cost[0],2),
                'max_cost_date':max_cost[1]
                }
+
     return render(request, 'lidlstatsApp/index.html', context)
 
 
@@ -44,10 +45,10 @@ def upload_file(request):
             print('form jest validą')
             new_img.upload_img(request.FILES['file'])
             FileHandler.manage_files()
-            return render(request, 'upload.html', {'form': form}) # HttpResponseRedirect('/success/url/')
+            return render(request, 'lidlstatsApp/upload.html', {'form': form}) # HttpResponseRedirect('/success/url/')
     else:
         form = ImageUpload()
-    return render(request, 'upload.html', {'form': form})
+    return render(request, 'lidlstatsApp/upload.html', {'form': form})
 
 def data(request):
     context = {}

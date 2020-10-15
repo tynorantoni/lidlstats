@@ -3,7 +3,7 @@ import os
 class UploadHandler:
 
     def upload_img(self,img_file):
-        img_upload_folder = 'lidlstatsPics/receipts'
+        img_upload_folder = 'lidlstatsPics/receipts/'
         print('mamo jestem w handlerze')
         if not os.path.isdir(img_upload_folder):
             os.makedirs(img_upload_folder, exist_ok=True)
