@@ -42,7 +42,8 @@ def upload_file(request):
         form = ImageUpload(request.POST, request.FILES)
         if form.is_valid():
             print('form jest validą')
-            new_img.upload_img(request.FILES['file']) #
+            new_img.upload_img(request.FILES['file'])
+            FileHandler.manage_files()
             return render(request, 'upload.html', {'form': form}) # HttpResponseRedirect('/success/url/')
     else:
         form = ImageUpload()
