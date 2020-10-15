@@ -1,10 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 from django.shortcuts import render, redirect
-from .forms import RegisterForm
+from .forms import RegisterForm, ImageUpload
 from .filehandler import FileHandler
 from .models import CalculatedDataModel
-
+from .uploadhandler import UploadHandler
 
 
 @login_required(login_url='/')
@@ -33,6 +33,17 @@ def index(request):
                }
     return render(request, 'lidlstatsApp/index.html', context)
 
+
+def upload_file(request):
+    new_img = UploadHandler()
+    if request.method == 'POST':
+        form = ImageUpload(request.POST, request.FILES)
+        if form.is_valid():
+            new_img.upload_img(request.FILES['file']) #
+            return render(request, 'upload.html', {'form': form}) # HttpResponseRedirect('/success/url/')
+    else:
+        form = ImageUpload()
+    return render(request, 'upload.html', {'form': form})
 
 def data(request):
     context = {}
