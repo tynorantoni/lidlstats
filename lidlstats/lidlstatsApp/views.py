@@ -34,11 +34,14 @@ def index(request):
     return render(request, 'lidlstatsApp/index.html', context)
 
 
+
+
 def upload_file(request):
     new_img = UploadHandler()
     if request.method == 'POST':
         form = ImageUpload(request.POST, request.FILES)
         if form.is_valid():
+            print('form jest validą')
             new_img.upload_img(request.FILES['file']) #
             return render(request, 'upload.html', {'form': form}) # HttpResponseRedirect('/success/url/')
     else:

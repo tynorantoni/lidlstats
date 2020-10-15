@@ -1,6 +1,8 @@
 from django.db import models
 import datetime
 
+from django.forms import ModelForm
+
 
 class BasicDataModel(models.Model):
     date_of_shopping = models.DateField(default=datetime.date.today)
@@ -25,3 +27,4 @@ class CalculatedDataModel(models.Model):
 
     def __repr__(self):
         return str(self.total_cost)
+

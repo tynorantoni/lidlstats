@@ -10,6 +10,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('user/', views.user_settings, name='user'),
     path('data/', views.data, name='data'),
+    path('upload/',views.upload_file,name='upload_file')
 
 ]
 

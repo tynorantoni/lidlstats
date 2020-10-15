@@ -91,6 +91,10 @@ DATABASES = {
     }
 }
 
+FILE_UPLOAD_HANDLERS= [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -143,6 +147,10 @@ DEFAULT_FROM_EMAIL = 'lidl.app@spoko.pl'
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+# MEDIA_URL = '/lidlstatsPics/'
+# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+# FILE_UPLOAD_PERMISSIONS = 0o644
+
 
 
 
