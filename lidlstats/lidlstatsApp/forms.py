@@ -17,4 +17,4 @@ class RegisterForm(UserCreationForm):
 
 class ImageUpload(forms.Form):
 
-    file=forms.FileField()
+    file=forms.ImageField(label="dodaj plik .jpg, .jpeg lub .png", required=True)
