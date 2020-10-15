@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     {% load static %}
+
     <title>Lidl o MIX</title>
 
     <!-- Custom fonts for this template-->
@@ -372,7 +373,7 @@
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ max_cost }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">Wykonane w dniu
-                                            {{max_cost_date}}
+                                            {{max_cost_date|date:"d.m.Y"}}
                                         </div>
                                         <!--                                        <div class="row no-gutters align-items-center">-->
                                         <!--                                            <div class="col-auto">-->
@@ -407,7 +408,7 @@
 
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{min_cost}}</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">Wykonane w dniu
-                                            {{min_cost_date}}
+                                            {{min_cost_date|date:"d.m.Y"}}
                                         </div>
 
                                     </div>

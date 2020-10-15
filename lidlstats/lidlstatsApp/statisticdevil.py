@@ -64,9 +64,11 @@ class StatisticDevil:
         else:
             try:
                 df_count = data_table_set.loc[data_table_set['VAT'] == 'A']
-                df_count['vatA'] = (float(df_count['price']) * 0.23)
+                df_count['vatA'] = pd.to_numeric(df_count['price'])*pd.to_numeric(df_count['amount']) * 0.23
+                print(df_count)
                 return round(df_count['vatA'].sum(),2)
-            except TypeError:
+            except TypeError as e:
+                print(e)
                 return 0
 
     def calculate_vat_b(self, data_table_set):
@@ -75,9 +77,10 @@ class StatisticDevil:
         else:
             try:
                 df_count = data_table_set.loc[data_table_set['VAT'] == 'B']
-                df_count['vatB'] = (float(df_count['price']) * 0.08)
+                df_count['vatB'] = pd.to_numeric(df_count['price'])*pd.to_numeric(df_count['amount']) * 0.08
                 return round(df_count['vatB'].sum(),2)
-            except TypeError:
+            except TypeError as e:
+                print(e)
                 return 0
 
     def calculate_vat_c(self, data_table_set):
@@ -86,9 +89,10 @@ class StatisticDevil:
         else:
             try:
                 df_count = data_table_set.loc[data_table_set['VAT'] == 'C']
-                df_count['vatC'] = (float(df_count['price']) * 0.05)
+                df_count['vatC'] = pd.to_numeric(df_count['price'])*pd.to_numeric(df_count['amount']) * 0.05
                 return round(df_count['vatC'].sum(),2)
-            except TypeError:
+            except TypeError as e:
+                print(e)
                 return 0
 
     def chart_bar(self):
