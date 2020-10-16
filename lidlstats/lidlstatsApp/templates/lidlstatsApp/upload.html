@@ -358,7 +358,11 @@
                                                 wiadomość email na adres lidl.app@spoko.pl</p>
                                         </div>
                                     </div>
-
+                                    {% if img_obj %}
+<div class="alert alert-success" role="alert">
+    <strong>{{msg}}</strong>
+</div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

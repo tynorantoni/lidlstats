@@ -148,8 +148,8 @@ DEFAULT_FROM_EMAIL = 'lidl.app@spoko.pl'
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/lidlstatsPics/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-FILE_UPLOAD_PERMISSIONS = 0o644
+MEDIA_ROOT = os.path.join(BASE_DIR,'lidlstatsPics')
+# FILE_UPLOAD_PERMISSIONS = 0o760
 
 
 

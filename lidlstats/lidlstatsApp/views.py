@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, ImageUpload, AllShoppingsFromDB
+from .forms import RegisterForm, AllShoppingsFromDB, UploadedImageForm
 from .filehandler import FileHandler
 from .models import CalculatedDataModel, BasicDataModel
 from .statisticdevil import StatisticDevil
-from .uploadhandler import UploadHandler
 
 
 @login_required(login_url='/')
@@ -36,17 +36,19 @@ def index(request):
 
 
 def upload_file(request):
-    new_img = UploadHandler()
     if request.method == 'POST':
-        form = ImageUpload(request.POST, request.FILES)
+        form = UploadedImageForm(request.POST, request.FILES)
         if form.is_valid():
-            print('form jest validą')
-            new_img.upload_img(request.FILES['file'])
-            FileHandler.manage_files()
-            return render(request, 'lidlstatsApp/upload.html', {'form': form})  # HttpResponseRedirect('/success/url/')
+            form.save()
+
+            img_obj = form.instance
+            msg='Paragon został dodany, wkrótce zostanie przetworzony'
+            return render(request, 'lidlstatsApp/upload.html', {'form': form,'img_obj':img_obj,'msg':msg})
     else:
-        form = ImageUpload()
+        form = UploadedImageForm()
     return render(request, 'lidlstatsApp/upload.html', {'form': form})
+
+
 
 
 def details(request):
@@ -59,11 +61,33 @@ def details(request):
         classes='table table-light table-striped',
         justify='left'
     )
-
-    context = { 'table_to_show': table_to_show,
-        'shopping_choices': shopping_choices}
+    if request.method == "GET":
+        print('w ifie')
+        shopping_choices = AllShoppingsFromDB(request.POST)
+        if shopping_choices.is_valid:
+            print("im valid")
+            # redirect to the url where you'll process the input
+            return HttpResponseRedirect('lidlstatsApp/details/1')
+    context = {'table_to_show': table_to_show,
+               'shopping_choices': shopping_choices}
 
     return render(request, 'lidlstatsApp/details.html', context)
+
+
+def detail_of_shopping(request, id_of_shopping):
+    data_from_db = BasicDataModel.objects.get(id=id_of_shopping)
+
+    table_df = StatisticDevil()
+    column_names = {'name': 'Nazwa Produktu', 'amount': 'Ilość', 'price': 'Cena', 'sale': 'rabat', 'VAT': 'VAT'}
+    table_to_show = table_df.make_yourself_a_table(data_from_db.product_data).rename(columns=column_names).to_html(
+        classes='table table-light table-striped',
+        justify='left'
+    )
+
+    context = {'table_to_show': table_to_show}
+
+
+    return render(request, 'lidlstatsApp/details/<str:pk>',context)
 
 
 def user_settings(request):

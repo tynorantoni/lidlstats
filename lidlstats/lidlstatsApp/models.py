@@ -1,7 +1,6 @@
 from django.db import models
 import datetime
 
-from django.forms import ModelForm
 
 
 class BasicDataModel(models.Model):
@@ -27,4 +26,11 @@ class CalculatedDataModel(models.Model):
 
     def __repr__(self):
         return str(self.total_cost)
+
+class UploadedImage(models.Model):
+    image = models.ImageField(upload_to='receipts')
+    title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
 
