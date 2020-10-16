@@ -50,18 +50,17 @@ def upload_file(request):
 
 
 def details(request):
-    all_db_records = BasicDataModel.objects.all()
+    all_db_records = BasicDataModel.objects.all().reverse()[0]
     shopping_choices = AllShoppingsFromDB()
 
     table_df = StatisticDevil()
     column_names = {'name': 'Nazwa Produktu', 'amount': 'Ilość', 'price': 'Cena', 'sale': 'rabat', 'VAT': 'VAT'}
-    # table_to_show = table_df.make_yourself_a_table(data_from_db.product_data).rename(columns=column_names).to_html(
-    #     classes='table table-light table-striped',
-    #     justify='left'
-    # )
+    table_to_show = table_df.make_yourself_a_table(all_db_records.product_data).rename(columns=column_names).to_html(
+        classes='table table-light table-striped',
+        justify='left'
+    )
 
-    context = {  # 'table_to_show': table_to_show,
-        'all_db_records': all_db_records,
+    context = { 'table_to_show': table_to_show,
         'shopping_choices': shopping_choices}
 
     return render(request, 'lidlstatsApp/details.html', context)
