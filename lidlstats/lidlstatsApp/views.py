@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, ImageUpload
+from .forms import RegisterForm, ImageUpload, AllShoppingsFromDB
 from .filehandler import FileHandler
 from .models import CalculatedDataModel, BasicDataModel
 from .statisticdevil import StatisticDevil
@@ -12,7 +12,7 @@ from .uploadhandler import UploadHandler
 def index(request):
     FileHandler.manage_files()
     shopping_data = CalculatedDataModel.objects.all()
-    data_to_show = CalculatedDataModel.objects.get(id=1)  #hmmmmm??
+    data_to_show = CalculatedDataModel.objects.get(id=1)  # hmmmmm??
     no_of_shop = shopping_data.count()
     total_shopping_cost = 0
     # max_cost=shopping_data.aggregate(Max('total_cost'))   stay in touch
@@ -23,19 +23,16 @@ def index(request):
     for cost in shopping_data:
         total_shopping_cost += cost.total_cost
 
-
     context = {'data_to_show': data_to_show,
                'no_of_shop': no_of_shop,
-               'total_shopping_cost': round(total_shopping_cost,2),
-               'min_cost': round(min_cost[0],2),
-               'min_cost_date':min_cost[1],
-               'max_cost': round(max_cost[0],2),
-               'max_cost_date':max_cost[1]
+               'total_shopping_cost': round(total_shopping_cost, 2),
+               'min_cost': round(min_cost[0], 2),
+               'min_cost_date': min_cost[1],
+               'max_cost': round(max_cost[0], 2),
+               'max_cost_date': max_cost[1]
                }
 
     return render(request, 'lidlstatsApp/index.html', context)
-
-
 
 
 def upload_file(request):
@@ -46,19 +43,27 @@ def upload_file(request):
             print('form jest validą')
             new_img.upload_img(request.FILES['file'])
             FileHandler.manage_files()
-            return render(request, 'lidlstatsApp/upload.html', {'form': form}) # HttpResponseRedirect('/success/url/')
+            return render(request, 'lidlstatsApp/upload.html', {'form': form})  # HttpResponseRedirect('/success/url/')
     else:
         form = ImageUpload()
     return render(request, 'lidlstatsApp/upload.html', {'form': form})
 
-def details(request):
-    data_from_db = BasicDataModel.objects.get(id=18)
-    table_df = StatisticDevil()
-    table_to_show = table_df.make_yourself_a_table(data_from_db.product_data)
 
-    context = {'table_to_show': table_to_show}
-    for i in table_to_show['name']:
-        print(i)
+def details(request):
+    all_db_records = BasicDataModel.objects.all()
+    shopping_choices = AllShoppingsFromDB()
+
+    table_df = StatisticDevil()
+    column_names = {'name': 'Nazwa Produktu', 'amount': 'Ilość', 'price': 'Cena', 'sale': 'rabat', 'VAT': 'VAT'}
+    # table_to_show = table_df.make_yourself_a_table(data_from_db.product_data).rename(columns=column_names).to_html(
+    #     classes='table table-light table-striped',
+    #     justify='left'
+    # )
+
+    context = {  # 'table_to_show': table_to_show,
+        'all_db_records': all_db_records,
+        'shopping_choices': shopping_choices}
+
     return render(request, 'lidlstatsApp/details.html', context)
 
 
