@@ -3,15 +3,16 @@ from django.db.models import Max
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, ImageUpload
 from .filehandler import FileHandler
-from .models import CalculatedDataModel
+from .models import CalculatedDataModel, BasicDataModel
+from .statisticdevil import StatisticDevil
 from .uploadhandler import UploadHandler
 
 
 @login_required(login_url='/')
 def index(request):
-    # FileHandler.manage_files()
+    FileHandler.manage_files()
     shopping_data = CalculatedDataModel.objects.all()
-    data_to_show = CalculatedDataModel.objects.get(id=1)
+    data_to_show = CalculatedDataModel.objects.get(id=1)  #hmmmmm??
     no_of_shop = shopping_data.count()
     total_shopping_cost = 0
     # max_cost=shopping_data.aggregate(Max('total_cost'))   stay in touch
@@ -50,9 +51,15 @@ def upload_file(request):
         form = ImageUpload()
     return render(request, 'lidlstatsApp/upload.html', {'form': form})
 
-def data(request):
-    context = {}
-    return render(request, 'lidlstatsApp/data.html', context)
+def details(request):
+    data_from_db = BasicDataModel.objects.get(id=18)
+    table_df = StatisticDevil()
+    table_to_show = table_df.make_yourself_a_table(data_from_db.product_data)
+
+    context = {'table_to_show': table_to_show}
+    for i in table_to_show['name']:
+        print(i)
+    return render(request, 'lidlstatsApp/details.html', context)
 
 
 def user_settings(request):
