@@ -20,6 +20,8 @@ class AllShoppingsFromDB(forms.Form):
     drop_down_list_from_DB = forms.ModelChoiceField(queryset=BasicDataModel.objects.values_list("date_of_shopping", flat=True).distinct(),
         empty_label=None)
 
+
+
 class UploadedImageForm(forms.ModelForm):
     class Meta:
         model = UploadedImage
