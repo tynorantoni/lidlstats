@@ -31,9 +31,9 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-<!--        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">-->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
             <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+                <i class="fas fa-shopping-bag"></i>
             </div>
             <div class="sidebar-brand-text mx-3">Lidl o MIX</div>
         </a>
@@ -44,7 +44,7 @@
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
             <a class="nav-link" href="/lidlApp">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <i class="fas fa-calculator"></i>
                 <span>Strona Główna</span></a>
         </li>
 
@@ -60,7 +60,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-plus-circle"></i>
                 <span>Dodaj Paragon</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -77,7 +77,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseUtilities">
-                <i class="fas fa-fw fa-wrench"></i>
+                <i class="fas fa-receipt"></i>
                 <span>Twoje zakupy</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -86,14 +86,13 @@
                     <h6 class="collapse-header">Lista zakupów</h6>
                     {% if list_of_all_shoppings %}
                     {% for list in list_of_all_shoppings %}
-                    <a class="collapse-item" href="/lidlApp/details/{{list.id}}">{{list.date_of_shopping|date:"d.m.Y"}}</a>
+                    <a class="collapse-item"
+                       href="/lidlApp/details/{{list.id}}">{{list.date_of_shopping|date:"d.m.Y"}}</a>
                     {% endfor %}
                     {% else %}
                     <h6 class="collapse-header">Brak zakupów</h6>
-                    <a class="collapse-item" href="/lidlstatsApp/upload">Dodaj nowe zakupy!</a>
+                    <a class="collapse-item" href="/lidlApp/upload">Dodaj nowe zakupy!</a>
                     {% endif %}
-
-
 
 
                 </div>
@@ -280,28 +279,27 @@
                                  {% if user.is_authenticated %}
                                             Dzień Dobry {{ user.username }}!
                                  {% else %}
-                                            <p>Jak żeś tu wesz bez logowania?!</p>
+                                            Jak żeś tu wesz bez logowania?!
                                  {% endif %}
                             </span>
-                            <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                            <i class="fas fa-user"></i>
                         </a>
                         <!-- Dropdown - User Information -->
 
 
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profil
                             </a>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="">
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Ustawienia
                             </a>
 
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'logout' %}" data-toggle="modal"
-                               data-target="#logoutModal">
+                            <a class="dropdown-item" href="{% url 'logout' %}">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Wyloguj
                             </a>
@@ -344,7 +342,7 @@
 
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        <i class="fas fa-list-ol fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -364,12 +362,13 @@
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        <i class="fas fa-coins fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Earnings (Monthly) Card Example -->
                     <div class="col-xl-3 col-md-6 mb-4">
@@ -384,21 +383,10 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">Wykonane w dniu
                                             {{max_cost_date|date:"d.m.Y"}}
                                         </div>
-                                        <!--                                        <div class="row no-gutters align-items-center">-->
-                                        <!--                                            <div class="col-auto">-->
-                                        <!--                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>-->
-                                        <!--                                            </div>-->
-                                        <!--                                            <div class="col">-->
-                                        <!--                                                <div class="progress progress-sm mr-2">-->
-                                        <!--                                                    <div class="progress-bar bg-info" role="progressbar"-->
-                                        <!--                                                         style="width: 50%" aria-valuenow="30" aria-valuemin="0"-->
-                                        <!--                                                         aria-valuemax="100"></div>-->
-                                        <!--                                                </div>-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
+
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        <i class="far fa-frown-open fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -422,7 +410,7 @@
 
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        <i class="far fa-smile-beam fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -448,7 +436,8 @@
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                          aria-labelledby="dropdownMenuLink">
                                         <div class="dropdown-header">Menu:</div>
-                                        <a class="dropdown-item" href="#">Pobierz wykres</a>
+                                        <a download="Moje zakupy.jpg" title="ImageName" class="dropdown-item"
+                                           href="{% static 'lidlstatsPics/charts/totalbar.png' %}">Pobierz wykres</a>
 
                                     </div>
                                 </div>
@@ -462,25 +451,7 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Content Column -->
-                        <div class="col-lg-6 mb-4">
-
-
-                            <!-- Color System -->
-                            <div class="row">
-
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
-                <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->

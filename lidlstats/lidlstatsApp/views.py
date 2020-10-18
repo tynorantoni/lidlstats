@@ -36,6 +36,7 @@ def index(request):
 
 
 def upload_file(request):
+    list_of_all_shoppings = BasicDataModel.objects.all()
     if request.method == 'POST':
         form = UploadedImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -43,24 +44,32 @@ def upload_file(request):
 
             img_obj = form.instance
             msg='Paragon został dodany, wkrótce zostanie przetworzony'
-            return render(request, 'lidlstatsApp/upload.html', {'form': form,'img_obj':img_obj,'msg':msg})
+            return render(request, 'lidlstatsApp/upload.html', {'form': form,
+                                                                'img_obj':img_obj,
+                                                                'msg':msg,
+                                                                'list_of_all_shoppings':list_of_all_shoppings
+                                                                })
     else:
         form = UploadedImageForm()
-    return render(request, 'lidlstatsApp/upload.html', {'form': form})
+    return render(request, 'lidlstatsApp/upload.html', {'form': form, 'list_of_all_shoppings':list_of_all_shoppings})
 
 
 def detail_of_shopping(request, id_of_shopping):
-
-    shopping_db_record = BasicDataModel.objects.get(pk=id_of_shopping)
+    list_of_all_shoppings = BasicDataModel.objects.all()
+    shopping_db_record = list_of_all_shoppings.get(pk=id_of_shopping)
+     # = BasicDataModel.objects.get(pk=id_of_shopping)
 
     table_df = StatisticDevil()
     column_names = {'name': 'Nazwa Produktu', 'amount': 'Ilość', 'price': 'Cena', 'sale': 'rabat', 'VAT': 'VAT'}
     table_to_show = table_df.make_yourself_a_table(shopping_db_record.product_data).rename(columns=column_names).to_html(
-        classes='table table-light table-striped',
+        classes='table table-light table-bordered table-hover table-striped ',
         justify='left'
     )
 
-    context = {'table_to_show': table_to_show}
+    context = {'table_to_show': table_to_show,
+               'shopping_bd_record':shopping_db_record,
+               'list_of_all_shoppings': list_of_all_shoppings
+               }
 
     return render(request, 'lidlstatsApp/details.html', context)
 
