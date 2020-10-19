@@ -28,7 +28,7 @@ class CalculatedDataModel(models.Model):
         return str(self.total_cost)
 
 class UploadedImage(models.Model):
-    image = models.ImageField(upload_to='receipts')
+    image = models.ImageField(upload_to='uploaded_img')
     title = models.CharField(max_length=200)
 
     def __str__(self):
