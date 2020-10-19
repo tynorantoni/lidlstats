@@ -11,7 +11,7 @@ class Mails:
         imap_ssl_host = 'imap.poczta.onet.pl'
         username = 'lidl.app@spoko.pl'
         password = 'ARp<s/<]`Z82c?F6'
-        download_folder = "/lidlstatsPics/uploaded_img"
+        download_folder = "uploaded_img"
         rv = False
 
         if not os.path.isdir(download_folder):
