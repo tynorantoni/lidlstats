@@ -11,7 +11,7 @@ class Mails:
         imap_ssl_host = 'imap.poczta.onet.pl'
         username = 'lidl.app@spoko.pl'
         password = 'ARp<s/<]`Z82c?F6'
-        download_folder = "./lidlstatsPics"
+        download_folder = "uploaded_img"
         rv = False
 
         if not os.path.isdir(download_folder):
@@ -47,14 +47,14 @@ class Mails:
         print('rv ', rv)
         return rv
 
-    def send_to_user(self, result_file, date_of_anal):
-
-        username = 'lidl.app@spoko.pl'
-        download_folder = "./lidlstatsPics"
-        send_mail(
-            'Wyniki analizy z dnia{}'.format(date_of_anal),
-            'Dzień Dobry! Przedstawiam wyniki analizy wydanych hajsów w dniu {}'.format(date_of_anal),
-            username,
-            ['pawel.szymaszek@gmail.com'],  # add user email
-            fail_silently=False,
-        ).attach(result_file, download_folder)
+    # def send_to_user(self, result_file, date_of_anal):
+    #
+    #     username = 'lidl.app@spoko.pl'
+    #     download_folder = "uploaded_img"
+    #     send_mail(
+    #         'Wyniki analizy z dnia{}'.format(date_of_anal),
+    #         'Dzień Dobry! Przedstawiam wyniki analizy wydanych hajsów w dniu {}'.format(date_of_anal),
+    #         username,
+    #         ['pawel.szymaszek@gmail.com'],  # add user email
+    #         fail_silently=False,
+    #     ).attach(result_file, download_folder)
