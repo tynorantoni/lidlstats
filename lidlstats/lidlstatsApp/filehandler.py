@@ -13,10 +13,10 @@ class FileHandler:
     @staticmethod
     def manage_files():
 
-        # new_mail = Mails()
+        new_mail = Mails()
         receipt_ocr = ReceiptOCR()
 
-        checker = False #new_mail.check_and_download()
+        checker = new_mail.check_and_download()
 
         if checker == False:
             print('entering json loop ')

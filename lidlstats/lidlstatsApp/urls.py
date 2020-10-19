@@ -24,7 +24,7 @@ urlpatterns = [
 # table_df = StatisticDevil()
 # table_to_show = table_df.make_yourself_a_table(data_from_db.product_data)
 # print(table_to_show.head())
-m = Mails()
-mm = m.check_and_download()
+# m = Mails()
+# mm = m.check_and_download()
 
 
